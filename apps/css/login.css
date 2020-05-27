@@ -1,0 +1,56 @@
+/* google fonts */
+@import url('https://fonts.googleapis.com/css?family=Acme|Montserrat|Roboto+Condensed&display=swap');
+
+* {
+    font-family: 'Montserrat', sans-serif;
+    box-sizing: border-box;
+}
+
+
+:root {
+    --bggradient: linear-gradient(to bottom, #dd2476, #ff512f);
+    --bggradient2: linear-gradient(to top, #dd2476, #ff512f);
+    --bggradient3: linear-gradient(to bottom, #938160, #EAE6D9);
+    --bggradient4: linear-gradient(to top, #938160, #EAE6D9);
+}
+
+.form-border {
+    text-align: center;
+    color: #fff;
+    background: rgba(10, 10, 10, 0.815);
+    margin: 2%;
+    height: 240px;
+    padding: 20px;
+}
+
+.form-border label {
+    padding-top: 1%;
+    padding-bottom: 1%;
+    text-transform: uppercase;
+    text-shadow: 1px 1px rgba(0, 0, 0, 0.5);
+    font-weight: bold;
+}
+
+.content {
+    border: 1px solid #fff;
+}
+
+.content p {
+    color: white;
+    padding-bottom: 2%;
+    font-style: italic;
+    font-weight: lighter;
+}
+
+.content p:hover {
+    color: blue;
+}
+
+.content input {
+    text-align: center;
+    width: 50%;
+}
+
+.btn {
+    border-radius: 200px;
+}
