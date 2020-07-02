@@ -11,7 +11,9 @@ require '../function/functionadmin.php';
 $id_penjualan = $_GET['id_penjualan'];
 
 $detailPenjualan = query("SELECT * FROM penjualan JOIN customer ON penjualan.id_cust = customer.id_cust
-JOIN detail_penjualan ON penjualan.id_penjualan = detail_penjualan.id_penjualan WHERE penjualan.id_penjualan = '$id_penjualan' ")[0];
+JOIN detail_penjualan ON penjualan.id_penjualan = detail_penjualan.id_penjualan WHERE penjualan.id_penjualan = '$id_penjualan' ");
+
+$detailPenjualanDeskripsi = query("SELECT * FROM penjualan JOIN customer ON penjualan.id_cust = customer.id_cust WHERE penjualan.id_penjualan = '$id_penjualan' ")[0];
 
 $id  = $_SESSION["admin"]["id_admin"];
 
@@ -76,11 +78,12 @@ $adminProfil = query("SELECT * FROM admins WHERE id_admin = $id")[0];
                                 <div class="row no-gutters">
                                     <div class="col-md-8">
                                         <div class="card-body">
-                                            <h5 class="card-title">Nama Customer : <?= $detailPenjualan['nama']; ?></h5>
-                                            <p class="card-text">No. Telf : <?= $detailPenjualan['no_telp']; ?></p>
-                                            <p class="card-text">Alamat : <?= $detailPenjualan['alamat']; ?></p>
-                                            <p class="card-text">Status : <?= $detailPenjualan['status']; ?></p>
-                                            <p class="card-text">Total Penjualan : Rp. <?= number_format($detailPenjualan['total_penjualan']); ?></p>
+                                            <h5 class="card-title">Nama Customer : <?= $detailPenjualanDeskripsi['nama']; ?></h5>
+                                            <p class="card-text">No. Telf : <?= $detailPenjualanDeskripsi['no_telp']; ?></p>
+                                            <p class="card-text">Alamat : <?= $detailPenjualanDeskripsi['alamat']; ?></p>
+                                            <p class="card-text">Status : <?= $detailPenjualanDeskripsi['status']; ?></p>
+                                            <p class="card-text">Total Penjualan : Rp. <?= number_format($detailPenjualanDeskripsi['total_penjualan']); ?></p>
+                                            <p class="card-text">Tanggal Penjualan : <?= date('d M Y', strtotime($detailPenjualanDeskripsi['tgl_penjualan'])); ?></p>
                                         </div>
                                     </div>
                                 </div>
@@ -95,13 +98,15 @@ $adminProfil = query("SELECT * FROM admins WHERE id_admin = $id")[0];
                                     <div class="col-md-8">
                                         <div class="card-body">
                                             <h5 class="card-title">DETAIL BARANG</h5>
-                                            <p class="card-text">Tanggal Penjualan : <?= date('d M Y', strtotime($detailPenjualan['tgl_penjualan'])); ?></p>
-                                            <p class="card-text">Nama Produk : <?= $detailPenjualan['nama_produk']; ?></p>
-                                            <p class="card-text">Harga Jual Produk : Rp. <?= number_format($detailPenjualan['harga_jual']); ?></p>
-                                            <p class="card-text">Qty Penjualan : <?= $detailPenjualan['jumbel']; ?></p>
-                                            <p class="card-text">Diskon : Rp. <?= number_format($detailPenjualan['diskon']); ?></p>
-                                            <p class="card-text">Ongkir : Rp. <?= number_format($detailPenjualan['ongkir']); ?></p>
-                                            <p class="card-text">Sub Total : Rp. <?= number_format($detailPenjualan['sub_total']); ?></p>
+                                            <?php foreach ($detailPenjualan as $dp) : ?>
+                                                <p class="card-text">Nama Produk : <?= $dp['nama_produk']; ?></p>
+                                                <p class="card-text">Harga Jual Produk : Rp. <?= number_format($dp['harga_jual']); ?></p>
+                                                <p class="card-text">Qty Penjualan : <?= $dp['jumbel']; ?></p>
+                                                <!-- <p class="card-text">PPN : Rp. <?= number_format($dp['ppn']); ?></p> -->
+                                                <p class="card-text">Total : Rp. <?= number_format($dp['sub_total']); ?></p>
+                                                <!-- <p class="card-text">Total Penjualan Barang : Rp. <?= number_format($dp['sub_total'] + $dp['ppn']); ?></p> -->
+                                                <hr>
+                                            <?php endforeach; ?>
                                         </div>
                                     </div>
                                 </div>

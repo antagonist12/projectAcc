@@ -48,7 +48,6 @@ if (isset($_POST['cetak'])) {
     <p>Status Penjualan :' . $detailpenjualan['status'] . '</p>
     </div>
 
-
         <table border="1" cellpadding="10" cellspacing="0">
             <thead>
                 <tr>
@@ -56,9 +55,7 @@ if (isset($_POST['cetak'])) {
                 <th scope="col">Nama Produk</th>
                 <th scope="col">Harga</th>
                 <th scope="col">Jumlah Produk Dibeli</th>
-                <th scope="col">Biaya Ongkir</th>
-                <th scope="col">Diskon</th>
-                <th scope="col">Total Harga Produk</th>
+                <th scope="col">Total Penjualan Produk</th>
                 </tr>';
 
     $i = 1;
@@ -69,25 +66,21 @@ if (isset($_POST['cetak'])) {
         <td>' . $row['nama_produk'] . '</td>
         <td> Rp. ' . number_format($row['harga_jual']) . '</td>
         <td>' . $row['jumbel'] . '</td>
-        <td>' . $row['ongkir'] . '</td>
-        <td>' . $row['diskon'] . '</td>
         <td> Rp. ' . number_format($row['sub_total']) . '</td>
-
         </tr>';
     }
     $html .= '
     <tfoot>
         <tr>
-            <th colspan="6">Total Penjualan</th>
+            <th colspan="4">Total Penjualan</th>
             <th>Rp.' .  number_format($detailpenjualan['total_penjualan']) . '</th>
     </tr>
     </tfoot>
-
     ';
 
     $html .= '</thead>
     </table>
-
+    <p>*(Total penjualan sudah termasuk PPN)</p>
     </body>
 
     </html>';
@@ -174,9 +167,10 @@ if (isset($_POST['cetak'])) {
                                         <th scope="col">Nama Produk</th>
                                         <th scope="col">Harga</th>
                                         <th scope="col">Jumlah Produk Dibeli</th>
-                                        <th scope="col">Biaya Ongkir</th>
-                                        <th scope="col">Diskon</th>
-                                        <th scope="col">Total Harga Produk</th>
+                                        <!-- <th scope="col">Biaya Ongkir</th> -->
+                                        <!-- <th scope="col">PPN</th> -->
+                                        <!-- <th scope="col">Subtotal Harga Produk</th> -->
+                                        <th scope="col">Total Penjualan Produk</th>
                                     </tr>
                                 </thead>
                                 <?php $i = 1; ?>
@@ -187,19 +181,23 @@ if (isset($_POST['cetak'])) {
                                             <td><?= $row["nama_produk"]; ?></td>
                                             <td>Rp. <?= number_format($row["harga_jual"]); ?> </td>
                                             <td><?= $row["jumbel"]; ?></td>
-                                            <td>Rp. <?= $row["ongkir"]; ?></td>
-                                            <td>Rp. <?= $row["diskon"]; ?></td>
+                                            <!-- <td>Rp. <?= $row["ongkir"]; ?></td> -->
+                                            <!-- <td>Rp. <?= number_format($row["ppn"]); ?></td> -->
                                             <td>Rp. <?= number_format($row["sub_total"]); ?></td>
+                                            <!-- <td>Rp. <?= number_format($row["sub_total"] + $row['ppn']); ?></td> -->
                                         </tr>
                                     </tbody>
                                     <?php $i++; ?>
                                 <?php endforeach; ?>
                                 <tfoot>
                                     <tr>
-                                        <th colspan="6">Total Penjualan</th>
+                                        <th colspan="4">Total Penjualan</th>
                                         <th>Rp. <?= number_format($detailpenjualan['total_penjualan']) ?></th>
                                     </tr>
                                 </tfoot>
+                                <caption>
+                                    *(Total penjualan sudah termasuk PPN)
+                                </caption>
                             </table>
                             <form action="" method="post" target="_blank">
                                 <button type="submit" class="btn btn-primary mb-3" name="cetak">Print Detail Penjualan</button>

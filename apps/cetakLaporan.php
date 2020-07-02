@@ -5,10 +5,8 @@ if (!isset($_SESSION["login"])) {
     exit;
 }
 
-
 require '../function/functionadmin.php';
 require_once __DIR__ . '/vendor/autoload.php';
-
 
 $id  = $_SESSION["admin"]["id_admin"];
 
@@ -19,7 +17,7 @@ if (isset($_POST['cetak'])) {
     $date1 = $_POST['date1'];
     $date2 = $_POST['date2'];
 
-    $datapenjualan = query("SELECT * FROM penjualan JOIN customer ON penjualan.id_cust = customer.id_cust JOIN detail_penjualan ON penjualan.id_penjualan = detail_penjualan.id_penjualan WHERE tgl_penjualan BETWEEN '$date1' AND '$date2' ");
+    $datapenjualan = query("SELECT * FROM penjualan JOIN customer ON penjualan.id_cust = customer.id_cust  WHERE tgl_penjualan BETWEEN '$date1' AND '$date2' ");
 
     $html = '<!DOCTYPE html>
     <html lang="en">
@@ -32,6 +30,10 @@ if (isset($_POST['cetak'])) {
     <body>
 
     <h1>Laporan Penjualan Per-periode</h1>
+
+    <p>Dari Tanggal :' . date('d M Y', strtotime($date1)) . '</p>
+    <p>Sampai Tanggal :' . date('d M Y', strtotime($date2)) . '</p>
+
         <table border="1" cellpadding="10" cellspacing="0">
             <thead>
                 <tr>
@@ -40,36 +42,31 @@ if (isset($_POST['cetak'])) {
                     <th>No. Telf Pembeli</th>
                     <th>Alamat Pembeli</th>
                     <th>Tanggal Penjualan</th>
-                    <th>Jumlah Penjualan Barang</th>
-                    <th>Sub-Harga Barang</th>
-                    <th>Diskon</th>
-                    <th>Biaya Ongkir</th>
                     <th>Total Pembelian</th>
-                    
-                    
                 </tr>';
-
     $i = 1;
+    $j = 0;
     foreach ($datapenjualan as $row) {
+        $j += $row['total_penjualan'];
         $html .= '<tr>
-
         <td>' . $i++ . '</td>
         <td>' . $row['nama'] . '</td>
         <td>' . $row['no_telp'] . '</td>
         <td>' . $row['alamat'] . '</td>
         <td>' . date('d M Y ', strtotime($row['tgl_penjualan'])) . '</td>
-        <td> Jumlah Penjualan ' . $row['jumbel'] . ' Barang</td>
-        <td> Rp.' . number_format($row['sub_total']) . '</td>
-        <td> Rp.' . number_format($row['diskon']) . '</td>
-        <td> Rp.' . number_format($row['ongkir']) . '</td>
         <td> Rp.' . number_format($row['total_penjualan']) . '</td>
-
         </tr>';
     }
 
     $html .= '</thead>
-        </table>
-
+    <tfoot>
+    <tr>
+        <th colspan="5">Grand Total Penjualan</th>
+        <th>Rp.' .  number_format($j) . '</th>
+    </tr>
+    </tfoot>
+    </table>
+    <p>*(Total penjualan sudah termasuk PPN)</p>
     </body>
     </html>';
 

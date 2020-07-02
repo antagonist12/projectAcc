@@ -8,8 +8,7 @@ if (!isset($_SESSION["login"])) {
 
 require '../function/functionadmin.php';
 
-$penjualan = query("SELECT * FROM penjualan JOIN customer ON penjualan.id_cust = customer.id_cust
-JOIN detail_penjualan ON penjualan.id_penjualan = detail_penjualan.id_penjualan ORDER BY tgl_penjualan ASC");
+$penjualan = query("SELECT * FROM penjualan JOIN customer ON penjualan.id_cust = customer.id_cust ORDER BY tgl_penjualan ASC");
 
 $id  = $_SESSION["admin"]["id_admin"];
 

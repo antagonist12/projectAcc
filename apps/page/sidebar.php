@@ -46,11 +46,11 @@
             <span>Penjualan</span></a>
     </li>
 
-    <li class="nav-item">
+    <!-- <li class="nav-item">
         <a class="nav-link" href="returPenjualan.php">
             <i class="fas fa-exchange-alt fa-fw"></i>
             <span>Retur Penjualan</span></a>
-    </li>
+    </li> -->
 
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
@@ -61,7 +61,7 @@
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Pilih Laporan:</h6>
                 <a class="collapse-item" href="laporan.php">Daftar Laporan Penjualan</a>
-                <a class="collapse-item" href="laporanRetur.php">Daftar Laporan Retur</a>
+                <!-- <a class="collapse-item" href="laporanRetur.php">Daftar Laporan Retur</a> -->
             </div>
         </div>
     </li>

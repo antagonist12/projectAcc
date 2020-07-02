@@ -18,6 +18,18 @@ function query($data)
     return $rows;
 }
 
+function query2($data)
+{
+    global $conn;
+
+    $result = mysqli_query($conn, $data);
+
+    while ($row = mysqli_fetch_assoc($result)) {
+
+        return $row;
+    }
+}
+
 // fungsi upload
 function upload()
 {
@@ -137,12 +149,12 @@ function loginadmin($data)
             echo "<script>location='index.php';</script>";
         } else {
             echo "<script> 
-				alert('Username / Password Anda Salah'); 
+				alert('Email / Password Anda Salah'); 
 				</script>";
         }
     } else {
         echo "<script> 
-            alert('Username / Password Anda Tidak Ada'); 
+            alert('Email / Password Anda Tidak Ada'); 
             </script>";
     }
 }

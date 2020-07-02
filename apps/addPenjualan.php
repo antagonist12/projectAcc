@@ -10,12 +10,28 @@ require '../function/functionadmin.php';
 
 if (isset($_POST['tambah'])) {
 
-    if (tambahpenjualan($_POST) > 0) {
-        echo "<script> alert('Penjualan Berhasil Di Tambah'); </script>";
-        echo "<script>location='penjualan.php';</script>";
-    } else {
-        echo mysqli_error($conn);
-    }
+    //mendapatkan jumlah yg diinput
+    $id_produk = $_POST['produk'];
+    $jumlah = $_POST['qty'];
+    $tglPenjualan = $_POST['tglPenjualan'];
+    $customer = $_POST['customer'];
+
+    //masuk keranjang belanja
+    $_SESSION["keranjang"][$id_produk] = $jumlah;
+    $_SESSION["deskripsi"] = [
+        'tanggal_penjualan' => $tglPenjualan,
+        'customer' => $customer
+    ];
+
+    echo "<script>alert('produk telah masuk ke keranjang belanja anda');</script>";
+    echo "<script>location='cartPenjualan.php';</script>";
+
+    // if (tambahpenjualan($_POST) > 0) {
+    //     echo "<script> alert('Penjualan Berhasil Di Tambah'); </script>";
+    //     echo "<script>location='penjualan.php';</script>";
+    // } else {
+    //     echo mysqli_error($conn);
+    // }
 }
 
 $id  = $_SESSION["admin"]["id_admin"];
@@ -115,40 +131,41 @@ $customer = query("SELECT * FROM customer");
                                         </div>
 
                                         <div class="form-group">
+                                            <label for="stoktersedia">Stok Tersedia</label>
+                                            <input type="number" class="form-control" id="stoktersedia" placeholder="Stok Tersedia" name="stoktersedia" readonly>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
                                             <label for="hargaJual">Harga Jual</label>
                                             <input type="number" class="form-control" id="hargaJual" placeholder="Harga" name="hargaJual" readonly>
                                         </div>
 
                                         <div class="form-group">
-                                            <label for="stoktersedia">Stok Tersedia</label>
-                                            <input type="number" class="form-control" id="stoktersedia" placeholder="Stok Tersedia" name="stoktersedia" readonly>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
                                             <label for="qty">Quantity</label>
                                             <input type="number" class="form-control" id="qty" placeholder="Quantity" name="qty" required>
                                         </div>
 
-                                        <div class="form-group">
+                                        <!-- <div class="form-group">
                                             <label for="sub_total">Sub Total</label>
                                             <input type="number" class="form-control" id="sub_total" placeholder="Sub Total" name="sub_total" readonly>
                                         </div>
 
                                         <div class="form-group">
-                                            <label for="diskon">Diskon</label>
-                                            <input type="text" class="form-control" id="diskon" placeholder="Diskon 2% Dalam Ketentuan" name="diskon" readonly>
-                                        </div>
+                                            <label for="diskon">PPN</label>
+                                            <input type="text" class="form-control" id="ppn" placeholder="PPN 10%" name="ppn" readonly>
+                                        </div> -->
 
-                                        <div class="form-group">
+                                        <!-- <div class="form-group">
                                             <label for="ongkir">Ongkir</label>
                                             <input type="text" class="form-control" id="ongkir" placeholder="Ongkir" name="ongkir" required>
-                                        </div>
+                                        </div> -->
 
                                         <div class="form-group">
                                             <label for="total">Total Penjualan</label>
-                                            <input type="text" class="form-control" id="total" placeholder="Total Akhir" name="total" readonly>
+                                            <input type="text" class="form-control" id="total" placeholder="Total Penjualan Barang" name="total" readonly>
                                         </div>
                                     </div>
 
@@ -233,26 +250,27 @@ $customer = query("SELECT * FROM customer");
             // var qty = document.getElementById('qty').value;
             // document.getElementById('sub_total').value = total;
             var total = $('#qty').val() * $('#hargaJual').val();
-            $("#sub_total").val(total);
-            if (total > 200000) {
-                var hitungDiskon = $('#sub_total').val() * parseFloat(2 / 100);
-                $("#diskon").val(hitungDiskon);
-                // var totalAkhir = parseInt($('#sub_total').val()) - parseInt($('#diskon').val());
-                // $('#total').val(totalAkhir);
-            } else {
-                $("#diskon").val(0);
-            }
+            $("#total").val(total);
+            // if (total) {
+            //     var hitungPPN = $('#sub_total').val() * parseFloat(10 / 100);
+            //     $("#ppn").val(hitungPPN);
+            //     var totalAkhir = parseInt($('#sub_total').val()) - parseInt($('#ppn').val());
+            //     $('#total').val(totalAkhir);
+            // } else {
+            //     $("#ppn").val(0);
+            //     $('#total').val(0);
+            // }
         });
 
-        $("#ongkir").keyup(function() {
-            var totalAkhir = parseInt($('#sub_total').val()) - parseInt($('#diskon').val());
-            var totalPenjualan = (parseInt($('#sub_total').val()) - parseInt($('#diskon').val())) + parseInt($('#ongkir').val());
-            if (!isNaN(totalPenjualan)) {
-                $('#total').val(totalPenjualan);
-            } else {
-                $('#total').val(totalAkhir);
-            }
-        });
+        // $("#ongkir").keyup(function() {
+        //     var totalAkhir = parseInt($('#sub_total').val()) - parseInt($('#diskon').val());
+        //     var totalPenjualan = (parseInt($('#sub_total').val()) - parseInt($('#diskon').val())) + parseInt($('#ongkir').val());
+        //     if (!isNaN(totalPenjualan)) {
+        //         $('#total').val(totalPenjualan);
+        //     } else {
+        //         $('#total').val(totalAkhir);
+        //     }
+        // });
     </script>
 </body>
 

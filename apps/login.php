@@ -39,7 +39,7 @@ if (isset($_POST['login'])) {
 
 <?php if (isset($error)) : ?>
     <script type="text/javascript">
-        alert("Username / Password Salah");
+        alert("Email / Password Salah");
     </script>
 <?php endif; ?>
 
